@@ -46,6 +46,22 @@ public class Project {
 	
 	
 
+	public Project() {
+		super();
+	}
+
+	public Project(Integer projectId, @Size(min = 3, max = 50) String project, @Size(min = 3, max = 50) String manager,
+			Date startDate, Date endDate, Integer priority, Boolean activeFlag) {
+		super();
+		this.projectId = projectId;
+		this.project = project;
+		this.manager = manager;
+		this.startDate = startDate;
+		this.endDate = endDate;
+		this.priority = priority;
+		this.activeFlag = activeFlag;
+	}
+
 	public Boolean getActiveFlag() {
 		return activeFlag;
 	}

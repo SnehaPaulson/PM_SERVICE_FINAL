@@ -1,57 +1,77 @@
 package com.fsd.projectmanager.controllertest;
 
-import java.util.ArrayList;
+
 import java.util.List;
 
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.skyscreamer.jsonassert.JSONAssert;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.http.MediaType;
-import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MvcResult;
-import org.springframework.test.web.servlet.RequestBuilder;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import com.fsd.projectmanager.controller.UserController;
-import com.fsd.projectmanager.entity.User;
-import com.fsd.projectmanager.model.UserModel;
-import com.fsd.projectmanager.service.UserService;
-import  com.fsd.projectmanager.util.TestUtils;
+import com.fsd.projectmanager.controller.ProjectManagerController;
+import com.fsd.projectmanager.entity.Project;
+import com.fsd.projectmanager.model.ProjectModel;
+import com.fsd.projectmanager.service.ProjectService;
+import com.fsd.projectmanager.service.TaskService;
+import com.fsd.projectmanager.util.TestUtils;
 
-@RunWith(SpringRunner.class)
-@WebMvcTest(value=UserController.class)
+@RunWith(SpringJUnit4ClassRunner.class)
 public class ProjectControllerTest {
-	
-	@Autowired
-	private MockMvc mockMvc;
-	
-	@MockBean
-	private UserService userService;
-	
-	@Test
-	public void viewUsers_Test() throws Exception{
-		UserModel userModel=TestUtils.getUserModel();
-		List<UserModel> userModelList = new ArrayList<UserModel>();
-		userModelList.add(userModel);
-		User  user=TestUtils.getUser();
-		List<User> userList = new ArrayList<User>();
-		userList.add(user);
-		Mockito.when(userService.viewUsers()).thenReturn(userList);
-		RequestBuilder requestBuilder = MockMvcRequestBuilders.get("/projectmanager/user/viewUsers").accept(MediaType.APPLICATION_JSON);
-		MvcResult result = mockMvc.perform(requestBuilder).andReturn();
-		String actualResult= result.getResponse().getContentAsString();
-		System.out.println("actualResult::"+actualResult);
-		String expected = TestUtils.serializeObjectAsJsonString(userModelList);
-		System.out.println("EXPECTED::"+userModelList);
-		JSONAssert.assertEquals(expected, actualResult, false);
 
-	}
-	
+    @InjectMocks
+    public ProjectManagerController ProjectController;
 
+    @Mock
+    public ProjectService ProjectService;
+    
+    @Mock
+    public TaskService taskService;
 
+    @Test
+    public void saveProjectTest(){
+
+        Mockito.when(ProjectService.addProject(Mockito.any(Project.class))).thenReturn(TestUtils.getProject());
+        Project output = ProjectController.addProject(TestUtils.getProjectModel());
+
+        Assert.assertEquals(TestUtils.getProject().getProjectId(), output.getProjectId());
+
+    }
+
+    @Test
+    public void getAllProjectsTest(){
+
+        Mockito.when(ProjectService.viewProjects()).thenReturn(TestUtils.getProjectList());
+        
+        Mockito.when(taskService.getCompletedTasksCount(Mockito.anyInt())).thenReturn(1);
+        
+        Mockito.when(taskService.getTaskCount(Mockito.anyInt())).thenReturn(1);
+
+        List<ProjectModel> output = ProjectController.viewProjects();
+
+        Assert.assertEquals(2, output.size());
+    }
+    
+    @Test
+    public void editProjectTest(){
+
+    	  Mockito.when(ProjectService.addProject(Mockito.any(Project.class))).thenReturn(TestUtils.getProject());
+          Project output = ProjectController.editProject(TestUtils.getProjectModel());
+
+          Assert.assertEquals(TestUtils.getProject().getProjectId(), output.getProjectId());
+
+          Assert.assertEquals(TestUtils.getProject().getProject(),output.getProject());
+    }
+
+    @Test
+    public void deleteProjectTest(){
+
+        Mockito.when(ProjectService.deleteProject(Mockito.anyInt())).thenReturn("Project deleted successfully");
+
+        String output = ProjectController.deleteProject(1);
+
+        Assert.assertEquals("Project deleted successfully", output);
+    }
 }

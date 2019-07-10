@@ -19,6 +19,14 @@ public class ParentTask {
 	@Column(name="Parent_Task")
 	String parentTask;
 	
+	public ParentTask() {
+		super();
+	}
+	public ParentTask(Integer parentId, String parentTask) {
+		super();
+		this.parentId = parentId;
+		this.parentTask = parentTask;
+	}
 	public Integer getParentId() {
 		return parentId;
 	}

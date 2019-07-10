@@ -69,11 +69,11 @@ public class UserModel {
 		this.taskID = taskID;
 	}
 	
-	/*@Override
+	@Override
 	public String toString() {
-		return String.format('[{"userID":1,"firstName":"sneha","lastName":"paulson","employeeID":123,"projectID":null,"taskID":null}]', userID, firstName, lastName,
+		return String.format("User [userId=%s, firstName=%s, lastName=%s, employeeId=%s]",userID, firstName, lastName,
 				employeeID);
-	}*/	
+	}	
 
 	
 	

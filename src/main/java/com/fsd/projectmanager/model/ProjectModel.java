@@ -17,7 +17,7 @@ public class ProjectModel {
 	}
 
 	public ProjectModel(Integer projectID, String project, String manager, Integer priority, Date startDate,
-			Date endDate, Boolean activeFlag, Integer noOfTasks, Integer completedTasks) {
+			Date endDate, Boolean activeFlag) {
 		super();
 		this.projectID = projectID;
 		this.project = project;
@@ -26,8 +26,6 @@ public class ProjectModel {
 		this.startDate = startDate;
 		this.endDate = endDate;
 		this.activeFlag = activeFlag;
-		this.noOfTasks = noOfTasks;
-		this.completedTasks = completedTasks;
 	}
 
 

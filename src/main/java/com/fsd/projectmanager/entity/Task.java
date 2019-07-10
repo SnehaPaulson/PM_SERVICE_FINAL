@@ -58,7 +58,24 @@ public class Task {
 	@Column(name="Active_Flag")
 	private Boolean activeFlag;
 	
-	
+
+	public Task() {
+		super();
+	}
+
+	public Task(Integer taskId, Integer parentId, Integer projectId, Integer userId,
+			@Size(min = 3, max = 50) String task, Date startDate, Date endDate, Integer priority, Boolean activeFlag) {
+		super();
+		this.taskId = taskId;
+		this.parentId = parentId;
+		this.projectId = projectId;
+		this.userId = userId;
+		this.task = task;
+		this.startDate = startDate;
+		this.endDate = endDate;
+		this.priority = priority;
+		this.activeFlag = activeFlag;
+	}
 
 	public Integer getProjectId() {
 		return projectId;

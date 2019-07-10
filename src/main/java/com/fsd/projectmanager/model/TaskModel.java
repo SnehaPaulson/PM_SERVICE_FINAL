@@ -23,7 +23,7 @@ public class TaskModel {
 
 	
 	public TaskModel(Integer taskID, Integer parentTaskID, String task, String parentTask, Date startDate, Date endDate,
-			Integer priority, Boolean activeFlag, Integer projectID, Integer userID, String project) {
+			Integer priority, Boolean activeFlag, Integer projectID, Integer userID) {
 		super();
 		this.taskID = taskID;
 		this.parentTaskID = parentTaskID;
@@ -35,7 +35,6 @@ public class TaskModel {
 		this.activeFlag = activeFlag;
 		this.projectID = projectID;
 		this.userID = userID;
-		this.project = project;
 	}
 
 

@@ -51,7 +51,7 @@ public class TaskController {
 	return 	taskService.addTask(newTask);
 	}
 	@PostMapping("/updateTask")
-	public Task upadteTask( @RequestBody TaskModel taskModel) {
+	public Task updateTask( @RequestBody TaskModel taskModel) {
 		
 		Task task = new Task();
 		task.setActiveFlag(true);
